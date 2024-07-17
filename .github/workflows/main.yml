@@ -1,10 +1,9 @@
-
 # This is a basic workflow to help you get started with Actions
 name: CI-CD Pipeline - Automate
 
 # Controls when the action will run.
 on:
-  # Triggers the workflow on push  request events but only for the main branch
+  # Triggers the workflow on push request events but only for the main branch
   push:
     branches: [main]
 
@@ -13,9 +12,6 @@ jobs:
   build:
     # This job will run on the latest version of Ubuntu
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x]
 
     steps:
       # Check out the repository
@@ -25,7 +21,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@master
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18.x
 
       # Install dependencies
       - name: Install dependencies
@@ -39,9 +35,6 @@ jobs:
     # This job depends on the build job
     needs: build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x]
 
     steps:
       # Check out the repository
@@ -51,7 +44,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@master
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18.x
 
       # Install dependencies
       - name: Install dependencies
@@ -97,8 +90,8 @@ jobs:
         with:
           image: ${{ secrets.DOCKER_USERNAME }}/reactsample:latest
           run: |
-            echo "runing the docker image"
-  
+            echo "running the docker image"
+
   push_to_vercel:
     runs-on: ubuntu-latest
     needs: [push_to_Docker_Hub]
@@ -108,6 +101,6 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.ORG_ID}}
-          vercel-project-id: ${{ secrets.PROJECT_ID}}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
           vercel-args: "--prod"
