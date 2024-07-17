@@ -6,7 +6,7 @@ name: CI-CD Pipeline - Automate
 on:
   # Triggers the workflow on push  request events but only for the main branch
   push:
-    branches: [master]
+    branches: [main]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
