@@ -36,6 +36,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Set up Java 17
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v1.8
       env:
@@ -43,9 +49,8 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       with:
         args: >
-          -Dsonar.organization=amandhimand
+          -Dsonar.organization=Dhiman_aman
           -Dsonar.projectKey=AmanDhimanD_githubactionsdemo
           -Dsonar.sources=.
           -Dsonar.host.url=https://sonarcloud.io
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-          -Dsonar.java.jdkHome=/Library/Java/JavaVirtualMachines/jdk1.8.0_301.jdk/Contents/Home
